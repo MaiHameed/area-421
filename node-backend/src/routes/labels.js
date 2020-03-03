@@ -34,12 +34,19 @@ function sanitizeLabels(labels) {
   return cleanedLabels;
 }
 
+const valid_issue_states = ['open', 'closed', 'all'];
+
 // eslint-disable-next-line no-unused-vars
 router.get(
   '/:owner/:repo',
   asyncHandler(async (req, res, next) => {
     const { owner, repo } = req.params;
-    const { since } = req.query;
+    const { since, issue_state = 'all' } = req.query;
+
+    if (!valid_issue_states.includes(issue_state.toLowerCase())) {
+      res.status(400).send({ error: 'Invalid status filter' });
+      return;
+    }
 
     if (since == null) {
       res.status(400).send({ error: 'missing since parameter' });
@@ -53,7 +60,8 @@ router.get(
         owner,
         repo,
         since,
-        per_page: 100
+        per_page: 100,
+        state: issue_state
       }
     );
 
@@ -64,6 +72,7 @@ router.get(
       return {
         title: issue.title,
         body: issue.body,
+        state: issue.state,
         issue_url: issue.html_url,
         repo_url: issue.repository_url,
         author: issue.login,
