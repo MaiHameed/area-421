@@ -1,10 +1,21 @@
-const fetch = require('node-fetch');
 const express = require('express');
+
+const { Octokit } = require('@octokit/core');
+const { paginateRest } = require('@octokit/plugin-paginate-rest');
 const asyncHandler = require('../middleware/asyncHandler');
 
 const router = express.Router();
 
-function cleanLabels(labels) {
+const { GH_API_KEY } = process.env;
+
+// GitHub Octkit rest client w/ automatic pagenation
+const CustomOctokit = Octokit.plugin(paginateRest);
+const octokit = new CustomOctokit({
+  auth: GH_API_KEY
+});
+
+// sanitizes labels to just enhancement bugs or features
+function sanitizeLabels(labels) {
   const cleanedLabels = [];
   labels.forEach(label => {
     label = label.toLowerCase();
@@ -35,10 +46,16 @@ router.get(
       return;
     }
 
-    const fetchURL = `https://api.github.com/repos/${owner}/${repo}/issues?since=${since}&per_page=100`;
-    const ghRequest = await fetch(fetchURL);
-
-    const issuesAndPRs = await ghRequest.json();
+    // See https://developer.github.com/v3/issues/#list-issues-for-a-repository
+    const issuesAndPRs = await octokit.paginate(
+      'GET /repos/:owner/:repo/issues',
+      {
+        owner,
+        repo,
+        since,
+        per_page: 100
+      }
+    );
 
     // only include regular issues, remove pull requests
     const issues = issuesAndPRs.filter(issue => issue.pull_request == null);
@@ -58,7 +75,7 @@ router.get(
 
     // changes all issues into ONE OF bug enhancement question
     formattedIssues.forEach(issue => {
-      issue.labels = cleanLabels(issue.labels);
+      issue.labels = sanitizeLabels(issue.labels);
     });
 
     const labeledIssues = formattedIssues.filter(
