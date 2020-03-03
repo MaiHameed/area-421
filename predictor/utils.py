@@ -10,7 +10,7 @@ class IssueLabeler:
                  body_text_preprocessor,
                  title_text_preprocessor,
                  model,
-                 class_names=['bug', 'feature_request', 'question']):
+                 class_names=['bug', 'enhancement', 'question']):
         """
         Parameters
         ----------
@@ -49,7 +49,7 @@ class IssueLabeler:
         >>> issue_labeler = IssueLabeler(body_pp, title_pp, model)
         >>> issue_labeler.get_probabilities('hello world', 'hello world')
         {'bug': 0.08372017741203308,
-         'feature': 0.6401631832122803,
+         'enhancement': 0.6401631832122803,
          'question': 0.2761166989803314}
         """
         # transform raw text into array of ints
