@@ -28,8 +28,7 @@ class Analytics extends React.Component {
         try {
             this.setState({ loading: true, error: undefined });
 
-            const url = `/${ownerName}/${repoName}&since=${encodeURIComponent(since)}`;
-            
+            const url = `/api/labels/${ownerName}/${repoName}?since=${encodeURIComponent(since)}`;
             const res = await fetch(url);
             const data = await res.json();
 

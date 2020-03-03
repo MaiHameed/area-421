@@ -24,7 +24,7 @@ function cleanLabels(labels) {
 }
 
 // eslint-disable-next-line no-unused-vars
-router.post(
+router.get(
   '/:owner/:repo',
   asyncHandler(async (req, res, next) => {
     const { owner, repo } = req.params;
