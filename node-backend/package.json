@@ -11,6 +11,8 @@
     "lint:fix": "eslint --fix ."
   },
   "dependencies": {
+    "@octokit/core": "^2.4.2",
+    "@octokit/plugin-paginate-rest": "^2.0.1",
     "cookie-parser": "~1.4.3",
     "express": "~4.16.0",
     "helmet": "^3.21.1",
