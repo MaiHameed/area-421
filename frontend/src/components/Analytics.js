@@ -28,7 +28,7 @@ class Analytics extends React.Component {
         try {
             this.setState({ loading: true, error: undefined });
 
-            const url = `/${ownerName}/${repoName}&since=${since}`;
+            const url = `/${ownerName}/${repoName}&since=${encodeURIComponent(since)}`;
             
             const res = await fetch(url);
             const data = await res.json();
@@ -81,11 +81,6 @@ class Analytics extends React.Component {
                                 defaultValue={this.state.ownerName}
                                 onChange={(e) => this.onChange(e)}
                             />
-                            <br />
-                            {this.state.loading ?
-                                <ButtonSkeleton /> :
-                                <Button onClick={this.onSearch}>Gather data!</Button>     
-                            }
                         </Column>
                         <Column>
                             <TextInput
@@ -99,19 +94,28 @@ class Analytics extends React.Component {
                             />
                         </Column>
                         <Column>
-                        <DatePicker
-                            dateFormat="m/d/Y"
-                            datePickerType="single"
-                            locale="en"
-                            onChange={(e) => this.setState({ since: new Date(e[0]).toISOString() })}
-                            >
-                            <DatePickerInput
-                                labelText="Data since"
-                                pattern="d{1,2}/d{1,2}/d{4}"
-                                placeholder="mm/dd/yyyy"
-                                type="text"
-                            />
+                            <DatePicker
+                                dateFormat="m/d/Y"
+                                datePickerType="single"
+                                locale="en"
+                                onChange={(e) => this.setState({ since: new Date(e[0]).toISOString() })}
+                                >
+                                <DatePickerInput
+                                    labelText="Data since"
+                                    pattern="d{1,2}/d{1,2}/d{4}"
+                                    placeholder="mm/dd/yyyy"
+                                    type="text"
+                                />
                             </DatePicker>
+                        </Column>
+                    </Row>
+                    <Row>
+                        <Column>
+                            <br />
+                            {this.state.loading ?
+                                <ButtonSkeleton style={{ float: 'right' }}/> :
+                                <Button onClick={this.onSearch} style={{ float: 'right' }}>Gather data!</Button>     
+                            }
                         </Column>
                     </Row>
                 </Grid> 
