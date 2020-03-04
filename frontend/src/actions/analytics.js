@@ -26,7 +26,7 @@ export const getAnalytics = form => async dispatch => {
             open: 0,
             closed: 0
         }
-
+        
         if (res.status === 200) {
             data.issues.labeled.forEach(issue => {
                 if (issue.state === 'open') {
