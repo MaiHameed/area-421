@@ -20,7 +20,7 @@ issue_labeler = IssueLabeler(body_text_preprocessor=body_pp,
 
 
 def predict_issue_label(issue_body, issue_title):
-    labels = []
+    labels = {}
 
     # Get JSON of predictions of keys: bug, enhancement, question
     predictions = issue_labeler.get_probabilities(body=issue_body,
@@ -29,7 +29,7 @@ def predict_issue_label(issue_body, issue_title):
     # Adds labels to list if the probability is over 50%
     for k, v in predictions.items():
         if(v > 0.5):
-            labels.append(k)
+            labels[k] = v
 
     # Returns AI generated labels to assign to GH issue
     return labels
