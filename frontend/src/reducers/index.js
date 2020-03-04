@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import analyticsReducer from './analyticsReducer';
-import { reducer as formReducer } from 'redux-form';
+import { combineReducers } from "redux";
+import analyticsReducer from "./analyticsReducer";
+import { reducer as formReducer } from "redux-form";
 
 export default combineReducers({
-    form: formReducer,
-    analytics: analyticsReducer
+  form: formReducer,
+  analytics: analyticsReducer
 });

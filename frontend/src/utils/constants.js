@@ -1,5 +1,5 @@
 export const issueStates = {
-    ALL: 'all',
-    OPEN: 'open',
-    CLOSED: 'closed'
+  ALL: "all",
+  OPEN: "open",
+  CLOSED: "closed"
 };
