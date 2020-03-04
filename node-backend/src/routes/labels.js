@@ -80,7 +80,6 @@ router.get(
 
     // only include regular issues, remove pull requests
     const issues = issuesAndPRs.filter(issue => issue.pull_request == null);
-
     const formattedIssues = issues.map(issue => {
       return {
         id: issue.id,
@@ -92,7 +91,8 @@ router.get(
         author: issue.login,
         labels: issue.labels.map(l => l.name),
         created_at: issue.created_at,
-        closed_at: issue.closed_at
+        closed_at: issue.closed_at,
+        assignees: issue.assignees
       };
     });
 
@@ -115,12 +115,12 @@ router.get(
       }
     );
 
-    console.log(predictionsResponse.data);
+    // console.log(predictionsResponse.data);
 
     res.send({
       issues: {
         labeled: labeledIssues,
-        unlabeled: predictionsResponse.data
+        unlabeled: predictionsResponse.data.issues
       }
     });
   })
