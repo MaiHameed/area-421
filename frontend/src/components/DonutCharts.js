@@ -39,7 +39,7 @@ const DonutCharts = ({ labels, statesTagged, statesUntagged }) => (
                     data={{
                         "labels": Object.keys(statesTagged),
                         "datasets": [{
-                            "label": "dataset1",
+                            "label": "dataset2",
                             "data": Object.values(statesTagged)
                         }]
                     }}
@@ -63,7 +63,7 @@ const DonutCharts = ({ labels, statesTagged, statesUntagged }) => (
                     data={{
                         "labels": Object.keys(statesUntagged),
                         "datasets": [{
-                            "label": "dataset1",
+                            "label": "dataset3",
                             "data": Object.values(statesUntagged)
                         }]
                     }}

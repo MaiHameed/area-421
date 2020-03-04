@@ -10,7 +10,8 @@ const initialState = {
     statesTagged: undefined, 
     statesUntagged: undefined, 
     issues: undefined, 
-    loading: false 
+    loading: false,
+    error: undefined
 };
 
 export default function(state = initialState, action) {
@@ -19,9 +20,8 @@ export default function(state = initialState, action) {
     switch(type) {
         case ANALYTICS_LOADING:
             return {
-                ...state,
-                loading: true,
-                error: undefined
+                ...initialState,
+                loading: true
             }
         case ANALYTICS_SUCCESS:
             return {

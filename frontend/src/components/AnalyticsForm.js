@@ -24,7 +24,7 @@ const RenderTextField = field => (
         defaultValue={field.input.value}
         onChange={e => field.input.onChange(e.target.value)}
     />
-)
+);
 
 const RenderDropdown = field => (
     <Dropdown
@@ -35,7 +35,7 @@ const RenderDropdown = field => (
         onChange={e => field.input.onChange(issueStates[e.selectedItem])}
         // disabled={loading}
     />
-)
+);
 
 const RenderDatePicker = field => (
     <DatePicker

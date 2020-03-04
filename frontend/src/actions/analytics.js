@@ -5,7 +5,7 @@ import {
     ANALYTICS_ERROR
 } from './types';
 
-export const getAnalytics = (form) => async dispatch => {
+export const getAnalytics = form => async dispatch => {
     const { ownerName, repoName, since, issueState } = form;
 
     dispatch({
