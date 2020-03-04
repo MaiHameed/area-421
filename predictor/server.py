@@ -18,21 +18,20 @@ def predict():
 
     # Parses through each issue and assigns the proper label(s) as well as
     # the probability value(s)
-    for i,value in enumerate(data['issues']):
+    for i, value in enumerate(data['issues']):
         # Gets the label list through the AI model
         labels = predict_issue_label(issue_body=value["body"],
-                                    issue_title=value["title"])
-        
+                                     issue_title=value["title"])
+
         # If no label to assign, delete issue entry
         if not labels:
             del data['issues'][i]
         else:
-            value["labels"].append(labels) 
+            value["labels"].append(labels)
 
     # Return new JSON object with added labels
     return jsonify(data)
 
 
 if __name__ == "__main__":
-    port = 8080
-    app.run(port=port, debug=True)
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
