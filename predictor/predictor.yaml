@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: issue-labeler-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: issue-labeler
+  template:
+    metadata:
+      labels:
+        app: issue-labeler
+    spec:
+      containers:
+        - name: issue-labeler
+          image: rzgry/issue-labeler
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: issue-labeler-deployment
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: issue-labeler
