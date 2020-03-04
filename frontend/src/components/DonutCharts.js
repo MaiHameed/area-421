@@ -57,6 +57,11 @@ const DonutCharts = ({ labels, statesTagged, statesUntagged }) => {
             options={{
               title: "Issues Opened / closed",
               resizable: true,
+              donut: {
+                center: {
+                  label: "Total issues"
+                }
+              },
               height: "400px",
               width: "400px"
             }}
