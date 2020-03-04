@@ -38,19 +38,44 @@ export const getAnalytics = form => async dispatch => {
         } else {
           statesTagged.closed++;
         }
-
-        issue.assignees.forEach(assignee => {
-          if (assigned[assignee.login] === undefined) {
-            assigned[assignee.login] = {};
-          }
-          issue.labels.forEach(label => {
-            if (assigned[assignee.login][label] === undefined) {
-              assigned[assignee.login][label] = 1;
-            } else {
-              assigned[assignee.login][label]++;
-            }
-          });
+        // issue.assignees.forEach(assignee => {
+        //   if (assigned[assignee.login] === undefined) {
+        //     assigned[assignee.login] = {};
+        //   }
+        //   issue.labels.forEach(label => {
+        //     if (assigned[assignee.login][label] === undefined) {
+        //       assigned[assignee.login][label] = 1;
+        //     } else {
+        //       assigned[assignee.login][label]++;
+        //     }
+        //   });
         });
+
+        const allIssues = [...data.issues.labeled, ...data.issues.unlabeled];
+
+        allIssues.forEach(issue => {
+            issue.assignees.forEach(assignee => {
+                if (assigned[assignee.login] === undefined) {
+                    assigned[assignee.login] = {};
+                }
+                issue.labels.forEach(label => {
+                    if (typeof label === "object") label = Object.keys(label)[0];
+                    if (assigned[assignee.login][label] === undefined) {
+                    assigned[assignee.login][label] = 1;
+                    } else {
+                    assigned[assignee.login][label]++;
+                    }
+                });
+            });
+
+            issue.labels.forEach(label => {
+                if (typeof label === "object") label = Object.keys(label)[0];
+                if (labels[label] !== undefined) {
+                  labels[label]++;
+                } else {
+                  labels[label] = 1;
+                }
+            });
 
         // Object.keys(assigned).forEach(function (item) {
         //     console.log('=====');
@@ -59,14 +84,6 @@ export const getAnalytics = form => async dispatch => {
         //     console.log(assigned[item]); // value
         //     console.log('=====');
         // });
-
-        issue.labels.forEach(label => {
-          if (labels[label] !== undefined) {
-            labels[label]++;
-          } else {
-            labels[label] = 1;
-          }
-        });
       });
 
       data.issues.unlabeled.forEach(issue => {
@@ -76,11 +93,11 @@ export const getAnalytics = form => async dispatch => {
           statesUntagged.closed++;
         }
 
-        if (labels.none === undefined) {
-          labels.none = 1;
-        } else {
-          labels.none++;
-        }
+        // if (labels.none === undefined) {
+        //   labels.none = 1;
+        // } else {
+        //   labels.none++;
+        // }
       });
 
       dispatch({

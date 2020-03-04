@@ -14,86 +14,76 @@ const DonutCharts = ({ labels, statesTagged, statesUntagged }) => {
   }
   return (
     <Row>
-      <Column>
-        {labels && (
-          <DonutChart
-            data={{
-              labels: Object.keys(labels),
-              datasets: [
-                {
-                  label: "dataset1",
-                  data: Object.values(labels)
-                }
-              ]
-            }}
-            options={{
-              title: "Tag distribution",
-              resizable: true,
-              donut: {
-                center: {
-                  label: "Issues"
-                }
-              },
-              height: "400px",
-              width: "400px"
-            }}
-            style={{ margin: "0 auto" }}
-          />
-        )}
-      </Column>
-      <Column>
-        {statesTagged && (
-          <DonutChart
-            data={{
-              labels: Object.keys(allStateData),
-              datasets: [
-                {
-                  label: "dataset2",
-                  data: Object.values(allStateData),
-                  fillColors: ["#28a745", "#cb2431"]
-                }
-              ]
-            }}
-            options={{
-              title: "Issues Opened / closed",
-              resizable: true,
-              donut: {
-                center: {
-                  label: "Total issues"
-                }
-              },
-              height: "400px",
-              width: "400px"
-            }}
-          />
-        )}
-      </Column>
-      <Column>
-        {statesUntagged && (
-          <DonutChart
-            data={{
-              labels: Object.keys(statesUntagged),
-              datasets: [
-                {
-                  label: "dataset3",
-                  data: Object.values(statesUntagged)
-                }
-              ]
-            }}
-            options={{
-              title: "State distribution",
-              resizable: true,
-              donut: {
-                center: {
-                  label: "Untagged issues"
-                }
-              },
-              height: "400px",
-              width: "400px"
-            }}
-          />
-        )}
-      </Column>
+    {labels && (
+        <React.Fragment>
+            <Column>
+                <br />
+                <br />
+                <br />
+                <br />
+                <p>Manually tagged issues: </p>
+                <h1>{statesTagged.open + statesTagged.closed}</h1>
+                <br />
+                <p>We tagged: </p>
+                <h1>{statesUntagged.open + statesUntagged.closed}</h1>
+                <br />
+                <p>Total issues:</p>
+                <h1>{allStateData.open + allStateData.closed}</h1>
+            </Column>
+            <Column>
+            <DonutChart
+                data={{
+                labels: Object.keys(labels),
+                datasets: [
+                    {
+                    label: "dataset1",
+                    data: Object.values(labels)
+                    }
+                ]
+                }}
+                options={{
+                title: "Tag distribution",
+                resizable: true,
+                donut: {
+                    center: {
+                    label: "Issues"
+                    }
+                },
+                height: "400px",
+                width: "400px"
+                }}
+                style={{ margin: "0 auto" }}
+            />
+        </Column>
+        <Column>
+            {statesTagged && (
+            <DonutChart
+                data={{
+                labels: Object.keys(allStateData),
+                datasets: [
+                    {
+                    label: "dataset2",
+                    data: Object.values(allStateData),
+                    fillColors: ["#28a745", "#cb2431"]
+                    }
+                ]
+                }}
+                options={{
+                title: "Issues Opened / closed",
+                resizable: true,
+                donut: {
+                    center: {
+                    label: "Total issues"
+                    }
+                },
+                height: "400px",
+                width: "400px"
+                }}
+            />
+            )}
+        </Column>
+        </React.Fragment>
+    )}
     </Row>
   );
 };
