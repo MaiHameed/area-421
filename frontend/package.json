@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@carbon/charts": "^0.29.7",
-    "@carbon/charts-react": "^0.29.7",
+    "@carbon/charts": "^0.29.8",
+    "@carbon/charts-react": "^0.29.8",
+    "@carbon/icons-react": "^10.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.1",
     "@testing-library/user-event": "^7.2.1",
+    "carbon-addons-data-viz-react": "^1.24.0",
     "carbon-components": "^10.10.1",
     "carbon-components-react": "^7.10.1",
     "carbon-icons": "^7.0.7",
@@ -18,6 +20,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
     "redux-form": "^8.3.0",
     "redux-thunk": "^2.3.0"
   },
