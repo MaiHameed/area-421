@@ -1,6 +1,8 @@
 import React from 'react';
 
 import {
+    Row,
+    Column,
     DataTable,
     TableContainer,
     Table,
@@ -38,54 +40,60 @@ const headers = [
     }
 ];
 
-const UntaggedIssuesTable = ({unlabeledIssues}) => (
-    <DataTable
-        headers={headers}
-        rows={unlabeledIssues}
-        render={({rows, headers, getHeaderProps, getRowProps}) => (
-            <TableContainer title="Untagged issues">
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableExpandHeader />
-                            {headers.map(header => (
-                                <TableHeader {...getHeaderProps({ header })}>
-                                    {header.header}
-                                </TableHeader>
+const UntaggedIssuesTable = ({issues}) => (
+    <Row>
+        <Column>
+            {issues && issues.unlabeled &&
+            <DataTable
+                headers={headers}
+                rows={issues.unlabeled}
+                render={({rows, headers, getHeaderProps, getRowProps}) => (
+                    <TableContainer title="Untagged issues">
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableExpandHeader />
+                                    {headers.map(header => (
+                                        <TableHeader {...getHeaderProps({ header })}>
+                                            {header.header}
+                                        </TableHeader>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {rows.map(row => (
+                                <React.Fragment key={row.id}>
+                                    <TableExpandRow {...getRowProps({ row })}>
+                                        {row.cells.map(cell => (
+                                            <TableCell key={cell.id}>
+                                                {cell.info.header === 'issue_url' ? 
+                                                    <a 
+                                                        href={cell.value}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        <NewTab20 />
+                                                    </a> :
+                                                    cell.value
+                                                }
+                                            </TableCell>
+                                        ))}
+                                    </TableExpandRow>
+                                    {row.isExpanded && (
+                                        <TableExpandedRow colSpan={headers.length + 1}>
+                                            <p>{issues.unlabeled.find(issue => issue.id === row.id).body || 'Nothing here 😁'}</p>
+                                        </TableExpandedRow>
+                                    )}
+                                </React.Fragment>
                             ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                    {rows.map(row => (
-                        <React.Fragment key={row.id}>
-                            <TableExpandRow {...getRowProps({ row })}>
-                                {row.cells.map(cell => (
-                                    <TableCell key={cell.id}>
-                                        {cell.info.header === 'issue_url' ? 
-                                            <a 
-                                                href={cell.value}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <NewTab20 />
-                                            </a> :
-                                            cell.value
-                                        }
-                                    </TableCell>
-                                ))}
-                            </TableExpandRow>
-                            {row.isExpanded && (
-                                <TableExpandedRow colSpan={headers.length + 1}>
-                                    <p>{unlabeledIssues.find(issue => issue.id === row.id).body || 'Nothing here 😁'}</p>
-                                </TableExpandedRow>
-                            )}
-                        </React.Fragment>
-                    ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        )}
-    />
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
+            />
+        }
+        </Column>
+    </Row>
 );
 
 export default UntaggedIssuesTable;
