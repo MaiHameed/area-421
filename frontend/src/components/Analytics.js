@@ -9,12 +9,7 @@ import UntagedIssuesTable from './UntaggedIssuesTable';
 import AnalyticsForm from './AnalyticsForm';
 import DonutCharts from './DonutCharts';
 
-
-const issueStates = {
-    ALL: 'all',
-    OPEN: 'open',
-    CLOSED: 'closed'
-};
+import { issueStates } from '../utils/constants';
 
 const Analytics = ({ form, analytics, getAnalytics }) => {
     return (

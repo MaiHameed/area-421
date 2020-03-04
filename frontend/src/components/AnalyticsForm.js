@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Form, Field, reduxForm } from "redux-form";
+
 import {
     TextInput, 
     Button, 
@@ -11,14 +13,7 @@ import {
     DatePickerInput,
     Dropdown } from 'carbon-components-react';
 
-import { Form, Field, reduxForm } from "redux-form";
-
-
-const issueStates = {
-    ALL: 'all',
-    OPEN: 'open',
-    CLOSED: 'closed'
-};
+import { issueStates } from '../utils/constants';
 
 const RenderTextField = field => (
     <TextInput
@@ -33,6 +28,7 @@ const RenderTextField = field => (
 
 const RenderDropdown = field => (
     <Dropdown
+        id='stateDropdown'
         titleText={field.label}
         items={Object.keys(issueStates)}
         label={Object.keys(issueStates).find(key => issueStates[key] === (field.input.value))}
