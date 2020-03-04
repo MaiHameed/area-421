@@ -46,7 +46,14 @@ const UntaggedIssuesTable = ({issues}) => (
             {issues && issues.unlabeled &&
             <DataTable
                 headers={headers}
-                rows={issues.unlabeled}
+                rows={issues.unlabeled.map(issue => ({
+                        id: issue.id,
+                        title: issue.title,
+                        state: issue.state,
+                        tag: (issue.labels.length !== 0) ? Object.keys(issue.labels[0])[0] : 'n/a',
+                        confidence: (issue.labels.length !== 0) ? Object.values(issue.labels[0])[0] : 'n/a',
+                        issue_url: issue.issue_url
+                }))}
                 render={({rows, headers, getHeaderProps, getRowProps}) => (
                     <TableContainer title="Untagged issues">
                         <Table>
