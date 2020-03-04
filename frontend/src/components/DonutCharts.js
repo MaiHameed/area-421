@@ -14,76 +14,77 @@ const DonutCharts = ({ labels, statesTagged, statesUntagged }) => {
   }
   return (
     <Row>
-    {labels && (
+      {labels && (
         <React.Fragment>
-            <Column>
-                <br />
-                <br />
-                <br />
-                <br />
-                <p>Manually tagged issues: </p>
-                <h1>{statesTagged.open + statesTagged.closed}</h1>
-                <br />
-                <p>We tagged: </p>
-                <h1>{statesUntagged.open + statesUntagged.closed}</h1>
-                <br />
-                <p>Total issues:</p>
-                <h1>{allStateData.open + allStateData.closed}</h1>
-            </Column>
-            <Column>
+          <Column>
+            <br />
+            <br />
+            <br />
+            <br />
+            <p>Manually tagged issues: </p>
+            <h1>{statesTagged.open + statesTagged.closed}</h1>
+            <br />
+            <p>We tagged: </p>
+            <h1>{statesUntagged.open + statesUntagged.closed}</h1>
+            <br />
+            <p>Total issues:</p>
+            <h1>{allStateData.open + allStateData.closed}</h1>
+          </Column>
+          <Column>
             <DonutChart
-                data={{
+              data={{
                 labels: Object.keys(labels),
                 datasets: [
-                    {
+                  {
                     label: "dataset1",
-                    data: Object.values(labels)
-                    }
+                    data: Object.values(labels),
+                    fillColors: ["#ee0701", "#1191e6", "#008672"]
+                  }
                 ]
-                }}
-                options={{
+              }}
+              options={{
                 title: "Tag distribution",
                 resizable: true,
                 donut: {
-                    center: {
+                  center: {
                     label: "Issues"
-                    }
+                  }
                 },
                 height: "400px",
                 width: "400px"
-                }}
-                style={{ margin: "0 auto" }}
+              }}
+              style={{ margin: "0 auto" }}
             />
-        </Column>
-        <Column>
+          </Column>
+          <Column>
             {statesTagged && (
-            <DonutChart
+              <DonutChart
                 data={{
-                labels: Object.keys(allStateData),
-                datasets: [
+                  labels: Object.keys(allStateData),
+                  datasets: [
                     {
-                    label: "dataset2",
-                    data: Object.values(allStateData),
-                    fillColors: ["#28a745", "#cb2431"]
+                      label: "dataset2",
+                      data: Object.values(allStateData),
+                      fillColors: ["#28a745", "#cb2431"]
                     }
-                ]
+                  ]
                 }}
                 options={{
-                title: "Issues Opened / closed",
-                resizable: true,
-                donut: {
+                  title: "Issues Opened / closed",
+                  resizable: true,
+                  donut: {
                     center: {
-                    label: "Total issues"
+                      label: "Total issues"
                     }
-                },
-                height: "400px",
-                width: "400px"
+                  },
+                  height: "400px",
+                  width: "400px"
                 }}
-            />
+              />
             )}
-        </Column>
+          </Column>
         </React.Fragment>
-    )}
+      )}
     </Row>
   );
 };
