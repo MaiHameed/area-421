@@ -7,6 +7,7 @@ PREDICTOR_PORT=8080
 docker network create $NETWORK
 
 docker run -d \
+  -p 8080:8080
   --network=$NETWORK \
   --name=predictor \
   --rm \
