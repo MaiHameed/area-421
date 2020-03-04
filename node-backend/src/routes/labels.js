@@ -113,12 +113,18 @@ router.get(
       }
     );
 
+    const predictedIssues = predictionsResponse.data.issues.filter(
+      predictedIssue => {
+        return predictedIssue.labels.length !== 0;
+      }
+    );
+
     // console.log(predictionsResponse.data);
 
     res.send({
       issues: {
         labeled: labeledIssues,
-        unlabeled: predictionsResponse.data.issues
+        unlabeled: predictedIssues
       }
     });
   })

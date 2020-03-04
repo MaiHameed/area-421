@@ -10,9 +10,7 @@ import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <Header>
-      <HeaderName prefix="[Area 421]">
-        Github Issues Analytics Dashboard
-      </HeaderName>
+      <HeaderName prefix="[Area 421]">Github Insights</HeaderName>
       <HeaderNavigation>
         <HeaderMenuItem>
           <Link to="/" style={{ underline: "none" }}>
