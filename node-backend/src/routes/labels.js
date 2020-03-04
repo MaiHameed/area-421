@@ -116,7 +116,7 @@ router.get(
     res.send({
       issues: {
         labeled: labeledIssues,
-        unlabeled: predictionsResponse.data
+        unlabeled: predictionsResponse.data.issues
       }
     });
   })
