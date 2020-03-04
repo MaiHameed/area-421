@@ -70,6 +70,7 @@ router.get(
 
     const formattedIssues = issues.map(issue => {
       return {
+        id: issue.id,
         title: issue.title,
         body: issue.body,
         state: issue.state,
@@ -94,7 +95,10 @@ router.get(
       issue => issue.labels.length === 0
     );
 
-    res.send({ issues: labeledIssues });
+    res.send({ issues: {
+      labeled: labeledIssues,
+      unlabeled: unlabledIssues
+    }});
   })
 );
 
