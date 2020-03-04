@@ -9,9 +9,7 @@ const router = express.Router();
 
 const { GH_API_KEY, PREDICTOR_PORT, PREDICTOR_HOSTNAME } = process.env;
 
-const PREDICTOR_API_ROOT = PREDICTOR_HOSTNAME
-  ? `${PREDICTOR_HOSTNAME}:${PREDICTOR_PORT}`
-  : 'localhost:8080';
+const PREDICTOR_API_ROOT = 'http://184.172.229.100:31726';
 
 // GitHub Octkit rest client w/ automatic pagenation
 const CustomOctokit = Octokit.plugin(paginateRest);
@@ -109,13 +107,11 @@ router.get(
     );
 
     const predictionsResponse = await axios.post(
-      `http://127.0.0.1:8080/predict`,
+      `${PREDICTOR_API_ROOT}/predict`,
       {
         issues: unlabledIssues
       }
     );
-
-    console.log(predictionsResponse.data);
 
     res.send({
       issues: {
