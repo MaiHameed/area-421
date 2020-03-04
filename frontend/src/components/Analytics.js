@@ -27,12 +27,15 @@ const Analytics = ({ form, analytics, getAnalytics }) => {
           }}
           onSubmit={() => getAnalytics(form.values)}
         />
+        <br /><br /><br /><br />
         <DonutCharts
           labels={analytics.labels}
           statesTagged={analytics.statesTagged}
           statesUntagged={analytics.statesUntagged}
         />
+        <br /><br /><br /><br />
         <BarChart assigned={analytics.assigned} labels={analytics.labels} />
+        <br /><br /><br /><br />
         <UntagedIssuesTable issues={analytics.issues} />
       </Grid>
     </div>
