@@ -16,7 +16,8 @@ def hello():
 def predict():
     data = request.get_json()
 
-    # Parses through each issue and assigns the proper label(s)
+    # Parses through each issue and assigns the proper label(s) as well as
+    # the probability value(s)
     for i,value in enumerate(data['issues']):
         # Gets the label list through the AI model
         labels = predict_issue_label(issue_body=value["body"],
