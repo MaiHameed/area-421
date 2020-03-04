@@ -14,27 +14,35 @@ const octokit = new CustomOctokit({
   auth: GH_API_KEY
 });
 
+const VALID_ISSUE_STATES = ['open', 'closed', 'all'];
+
+const ENHANCEMENT_LABELS = [
+  'enhancement',
+  'feature',
+  'feature_request',
+  'kind/feature'
+];
+
+const BUG_LABELS = ['bug', 'kind/bug'];
+
+const QUESTIONS_LABELS = ['question', 'kind/question'];
+
 // sanitizes labels to just enhancement bugs or features
 function sanitizeLabels(labels) {
   const cleanedLabels = [];
   labels.forEach(label => {
+    // eslint-disable-next-line no-param-reassign
     label = label.toLowerCase();
-    if (
-      label === 'enhancement' ||
-      label === 'feature' ||
-      label === 'feature_request'
-    ) {
+    if (ENHANCEMENT_LABELS.includes(label)) {
       cleanedLabels.push('enhancement');
-    } else if (label === 'bug') {
+    } else if (BUG_LABELS.includes(label)) {
       cleanedLabels.push('bug');
-    } else if (label === 'question') {
+    } else if (QUESTIONS_LABELS.includes(label)) {
       cleanedLabels.push('question');
     }
   });
   return cleanedLabels;
 }
-
-const valid_issue_states = ['open', 'closed', 'all'];
 
 // eslint-disable-next-line no-unused-vars
 router.get(
@@ -43,8 +51,8 @@ router.get(
     const { owner, repo } = req.params;
     const { since, issue_state = 'all' } = req.query;
 
-    if (!valid_issue_states.includes(issue_state.toLowerCase())) {
-      res.status(400).send({ error: 'Invalid status filter' });
+    if (!VALID_ISSUE_STATES.includes(issue_state.toLowerCase())) {
+      res.status(400).send({ error: 'Invalid issue state filter' });
       return;
     }
 
@@ -95,10 +103,12 @@ router.get(
       issue => issue.labels.length === 0
     );
 
-    res.send({ issues: {
-      labeled: labeledIssues,
-      unlabeled: unlabledIssues
-    }});
+    res.send({
+      issues: {
+        labeled: labeledIssues,
+        unlabeled: unlabledIssues
+      }
+    });
   })
 );
 
