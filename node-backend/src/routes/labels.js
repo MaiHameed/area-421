@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 
 const { Octokit } = require('@octokit/core');
 const { paginateRest } = require('@octokit/plugin-paginate-rest');
@@ -6,7 +7,11 @@ const asyncHandler = require('../middleware/asyncHandler');
 
 const router = express.Router();
 
-const { GH_API_KEY } = process.env;
+const { GH_API_KEY, PREDICTOR_PORT, PREDICTOR_HOSTNAME } = process.env;
+
+const PREDICTOR_API_ROOT = PREDICTOR_HOSTNAME
+  ? `${PREDICTOR_HOSTNAME}:${PREDICTOR_PORT}`
+  : 'localhost:8080';
 
 // GitHub Octkit rest client w/ automatic pagenation
 const CustomOctokit = Octokit.plugin(paginateRest);
@@ -103,10 +108,19 @@ router.get(
       issue => issue.labels.length === 0
     );
 
+    const predictionsResponse = await axios.post(
+      `http://127.0.0.1:8080/predict`,
+      {
+        issues: unlabledIssues
+      }
+    );
+
+    console.log(predictionsResponse.data);
+
     res.send({
       issues: {
         labeled: labeledIssues,
-        unlabeled: unlabledIssues
+        unlabeled: predictionsResponse.data
       }
     });
   })
