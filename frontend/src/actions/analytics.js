@@ -5,6 +5,7 @@ import {
     ANALYTICS_ERROR
 } from './types';
 
+// improve later
 export const getAnalytics = form => async dispatch => {
     const { ownerName, repoName, since, issueState } = form;
 
@@ -26,7 +27,8 @@ export const getAnalytics = form => async dispatch => {
             open: 0,
             closed: 0
         }
-        
+        const assigned = {};
+
         if (res.status === 200) {
             data.issues.labeled.forEach(issue => {
                 if (issue.state === 'open') {
@@ -35,6 +37,27 @@ export const getAnalytics = form => async dispatch => {
                 else {
                     statesTagged.closed++;
                 }
+
+                issue.assignees.forEach(assignee => {
+                    if (assigned[assignee.login] === undefined) {
+                        assigned[assignee.login] = {};
+                    }
+                    issue.labels.forEach(label => {
+                        if (assigned[assignee.login][label] === undefined) {
+                            assigned[assignee.login][label] = 1;
+                        } else {
+                            assigned[assignee.login][label]++;
+                        }
+                    });
+                });
+
+                // Object.keys(assigned).forEach(function (item) {
+                //     console.log('=====');
+                //     console.log(item); // key
+                //     console.log('---');
+                //     console.log(assigned[item]); // value
+                //     console.log('=====');
+                // });
 
                 issue.labels.forEach(label => { 
                     if (labels[label] !== undefined) {
@@ -65,7 +88,8 @@ export const getAnalytics = form => async dispatch => {
                     labels, 
                     statesTagged, 
                     statesUntagged, 
-                    issues: data.issues
+                    issues: data.issues,
+                    assigned
                 }
             });
         } else if (res.status === 404) { 

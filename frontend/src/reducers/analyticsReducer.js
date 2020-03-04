@@ -9,7 +9,8 @@ const initialState = {
     labels: undefined, 
     statesTagged: undefined, 
     statesUntagged: undefined, 
-    issues: undefined, 
+    issues: undefined,
+    assigned: undefined, 
     loading: false,
     error: undefined
 };
@@ -30,6 +31,7 @@ export default function(state = initialState, action) {
                 statesTagged: payload.statesTagged,
                 statesUntagged: payload.statesUntagged,
                 issues: payload.issues,
+                assigned: payload.assigned,
                 loading: false
             };
         case ANALYTICS_NOT_FOUND:

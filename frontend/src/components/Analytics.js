@@ -8,6 +8,7 @@ import { Grid } from 'carbon-components-react';
 import UntagedIssuesTable from './UntaggedIssuesTable';
 import AnalyticsForm from './AnalyticsForm';
 import DonutCharts from './DonutCharts';
+import BarChart from './BarChart';
 
 import { issueStates } from '../utils/constants';
 
@@ -30,6 +31,10 @@ const Analytics = ({ form, analytics, getAnalytics }) => {
                     labels={analytics.labels}
                     statesTagged={analytics.statesTagged}
                     statesUntagged={analytics.statesUntagged}
+                />
+                <BarChart 
+                    assigned={analytics.assigned}
+                    labels={analytics.labels}
                 />
                 <UntagedIssuesTable
                     issues={analytics.issues} 
